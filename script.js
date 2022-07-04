@@ -27,6 +27,7 @@ saveBtn.addEventListener("click", ()=>{
     
 });
 
+
 confirmPeselBtn.addEventListener("click", ()=>{
     const elem = document.getElementById("check_number");
     if(elem){
@@ -38,9 +39,8 @@ confirmPeselBtn.addEventListener("click", ()=>{
     };
 
     born.value = "";
-    const yearTemp = pesel.value.slice(0,2);
-    let year = pesel.value.slice(2,3) < 2 ? "19" : "20";
-    year += yearTemp;
+    const yearTemp = +pesel.value.slice(0,2);
+    let year = 1900 + yearTemp + (Math.floor(+pesel.value.slice(2,3)/2) * 100);
     let month = +pesel.value.slice(2,4);
     month = month > 20 ? month - 20 : month;
     const day = pesel.value.slice(4,6);
