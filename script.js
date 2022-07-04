@@ -5,9 +5,15 @@ const lastName = myForm.elements.last_name;
 const email = myForm.elements.email;
 const description = myForm.elements.description;
 const gender = myForm.elements.gender;
+const pesel = myForm.elements.pesel;
 const alertDialog = document.getElementById('alertDialog');
 const closeDialogBtn = document.getElementById('closeDialogBtn');
 const main = document.getElementById('main');
+
+const born = document.getElementById('born');
+const peselGender = document.getElementById('pesel_gender');
+const peselData = document.getElementById('pesel_data');
+const confirmPeselBtn = document.getElementById('confirm_pesel');
 
 saveBtn.addEventListener("click", ()=>{
     const elem = document.getElementById("data");
@@ -19,7 +25,49 @@ saveBtn.addEventListener("click", ()=>{
         myForm.reset();
     }
     
-})
+});
+
+confirmPeselBtn.addEventListener("click", ()=>{
+    const elem = document.getElementById("check_number");
+    if(elem){
+        elem.remove();
+    }
+    const peselRegExp = /^[0-9]/;
+    if(!peselRegExp.test(pesel.value) || pesel.value.length != 11){
+        return;
+    };
+
+    born.value = "";
+    const yearTemp = pesel.value.slice(0,2);
+    let year = pesel.value.slice(2,3) < 2 ? "19" : "20";
+    year += yearTemp;
+    let month = +pesel.value.slice(2,4);
+    month = month > 20 ? month - 20 : month;
+    const day = pesel.value.slice(4,6);
+    born.value += `Data urodzenia: ${day}-${month < 10 ? '0' + month : month}-${year}`;
+
+    peselGender.value = `Płeć: ${+pesel.value.slice(9,10) % 2 == 0 ? "Kobieta" : "Mężczyzna"}`;
+
+    let sum = 0;
+    for(let i = 0; i < 10; i++){
+        if(i % 4 == 0){
+            sum += (+pesel.value[i] * 1) % 10;
+        } else if(i % 4 == 1){
+            sum += (+pesel.value[i] * 3) % 10;
+        } else if(i % 4 == 2){
+            sum += (+pesel.value[i] * 7) % 10;
+        } else{
+            sum += (+pesel.value[i] * 9) % 10;
+        }
+    }
+    sum %= 10;
+    checkNumber = 10 - sum;
+
+    checkNumberEl = document.createElement('p');
+    checkNumberEl.setAttribute('id', 'check_number');
+    checkNumberEl.innerText = `Suma kontrolna: ${checkNumber}`;
+    peselData.appendChild(checkNumberEl);
+});
 
 function appendData(){
     const el = document.createElement("div");
