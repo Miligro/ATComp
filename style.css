@@ -72,6 +72,7 @@ input{
 
 textarea{
     margin-top: 5px;
+    padding: 5px;
     width: 100%;
     display: block;
 }
@@ -82,13 +83,13 @@ select{
 }
 
 form button{
-    margin-top: 5px;
-    padding: 7px;
+    margin-top: 10px;
+    padding: 10px;
     background-color: #5cb85c;
     border: 1px solid #5cb85c;
     border-radius: 5px;
     color: black;
-
+    /* margin-left: 90%; */
 }
 
 form button:hover,
