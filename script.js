@@ -20,6 +20,38 @@ const invalidEmail = document.getElementById('invalid_email');
 const invalidDescription = document.getElementById('invalid_description');
 const invalidPesel = document.getElementById('invalid_pesel');
 
+const toValid = [
+    {
+        label: 'imie',
+        elem: firstName,
+        regex: /^[a-zA-Z]+$/,
+        invalid: invalidFirstName,
+    },
+    {
+        label: 'nazwisko',
+        elem: lastName,
+        regex: /^[a-zA-Z]+$/,
+        invalid: invalidLastName,
+    },
+    {
+        label: 'email',
+        elem: email,
+        regex: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+        invalid: invalidEmail,
+    },
+    {
+        label: 'description',
+        elem: description,
+        regex: "",
+        invalid: invalidDescription,
+    },
+    {
+        label: 'pesel',
+        elem: pesel,
+        regex: "",
+        invalid: invalidPesel,
+    }
+]
 
 saveBtn.addEventListener("click", ()=>{
     const elem = document.getElementById("data");
@@ -38,125 +70,40 @@ saveBtn.addEventListener("click", ()=>{
     
 });
 
+function checkFunction(elem, regex){
+    if(regex){
+        if(!elem.value.trim() || !regex.test(elem.value)){
+            return false;
+        }
+    } else if(!elem.value.trim()){
+        return false;
+    }
+    return true;
+}
+
 function validateInputs(){
-    if(!checkFirstName()){
-        errorDialog("Podano niepoprawne imię!");
-        return false;   
-    }
-    if(!checkLastName()){
-        errorDialog("Podano niepoprawne nazwisko!");
-        return false;
-    }
-    if(!checkEmail()){
-        errorDialog("Podano niepoprawny email!");
-        return false;
-    }
-    if(!checkDescription()){
-        errorDialog("Podano niepoprawny opis!");
-        return false;
-    }
-    if(!checkPesel()){
-        errorDialog("Podano niepoprawny pesel!");
-        return false;
-    }
-    return true;
-}
-
-function checkEmail(){
-    const emailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if(!email.value.trim() || !emailRegExp.test(email.value)){
-        return false;
-    }
-    return true;
-}
-
-function checkFirstName(){
-    const nameRegExp = /^[a-zA-Z]+$/;
-    if(!firstName.value.trim() || !nameRegExp.test(firstName.value)){
-        return false;
-    }
-    return true;
-}
-
-function checkLastName(){
-    const nameRegExp = /^[a-zA-Z]+$/;
-    if(!lastName.value.trim() || !nameRegExp.test(lastName.value)){
-        return false;
-    }
-    return true;
-}
-
-function checkPesel(){
-    const peselRegExp = /^[0-9]/;
-    if(!peselRegExp.test(pesel.value) || pesel.value.length != 11){
-        return false;
-    }
-    return true;
-}
-
-function checkDescription(){
-    if(!description.value.trim()){
-        return false;
+    for(key in toValid) {
+        let el = toValid[key]
+        if(!checkFunction(el.elem,el.regex)){
+            errorDialog(`Podano niepoprawne ${el.label}!`);
+            return false;   
+        }
     }
     return true;
 }
 
 ['keyup', 'focusout'].forEach(ev =>{
-    firstName.addEventListener(ev, (e)=>{
-        if(!checkFirstName()){
-            firstName.style.border = '1px solid red';
-            invalidFirstName.style.display = 'block'
+    for(key in toValid) {
+        let el = toValid[key]
+        if(!checkFunction(el.elem,el.regex)){
+            el.invalid.style.display = 'block'
+            el.elem.style.border = '1px solid red';
         }else{
-            firstName.style.border = '1px solid black'; 
-            invalidFirstName.style.display = 'none'
+            el.invalid.style.display = 'none'
+            el.elem.style.border = '1px solid black'; 
         }
-    })
-});
-
-['keyup', 'focusout'].forEach(ev =>{
-    lastName.addEventListener(ev, (e)=>{
-        if(!checkLastName()){
-            lastName.style.border = '1px solid red';
-            invalidLastName.style.display = 'block'
-        }else{
-            lastName.style.border = '1px solid black'; 
-            invalidLastName.style.display = 'none'
-        }
-    })
-});
-
-['keyup', 'focusout'].forEach(ev =>{
-    description.addEventListener("focusout", (e)=>{
-        if(!checkDescription()){
-            description.style.border = '1px solid red';
-            invalidDescription.style.display = 'block'
-        }else{
-            description.style.border = '1px solid black'; 
-            invalidDescription.style.display = 'none'
-        }
-    })
-});
-
-email.addEventListener('focusout', (e)=>{
-    if(!checkEmail()){
-        email.style.border = '1px solid red';
-        invalidEmail.style.display = 'block'
-    }else{
-        email.style.border = '1px solid black'; 
-        invalidEmail.style.display = 'none'
     }
-})
-
-
-pesel.addEventListener('focusout', (e)=>{
-    if(!checkPesel()){
-        pesel.style.border = '1px solid red';
-        invalidPesel.style.display = 'block'
-    }else{
-        pesel.style.border = '1px solid black'; 
-        invalidPesel.style.display = 'none'
-    }
-})
+});
 
 function getPeselData(){
     born.value = "";
