@@ -29,9 +29,6 @@ function checkForm(){
     let nameRegex = /^[a-zA-Z]+$/;
     const emailRegExp = new RegExp(emailRegex);
     const nameRegExp = new RegExp(nameRegex);
-    if(!emailRegExp.test(email.value)){
-        return false;
-    }
     if(firstName.value.trim() === "" || lastName.value.trim() === "" || description.value.trim() === "" || !emailRegExp.test(email.value) || !nameRegExp.test(firstName.value) || !nameRegExp.test(lastName.value)){ 
         return false;
     };
