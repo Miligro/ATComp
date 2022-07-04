@@ -95,13 +95,15 @@ function validateInputs(){
 ['keyup', 'focusout'].forEach(ev =>{
     for(key in toValid) {
         let el = toValid[key]
-        if(!checkFunction(el.elem,el.regex)){
-            el.invalid.style.display = 'block'
-            el.elem.style.border = '1px solid red';
-        }else{
-            el.invalid.style.display = 'none'
-            el.elem.style.border = '1px solid black'; 
-        }
+        el.elem.addEventListener(ev, ()=>{
+            if(!checkFunction(el.elem,el.regex)){
+                el.invalid.style.display = 'block'
+                el.elem.style.border = '1px solid red';
+            }else{
+                el.invalid.style.display = 'none'
+                el.elem.style.border = '1px solid black'; 
+            }
+        })
     }
 });
 
