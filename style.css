@@ -68,11 +68,16 @@ body{
     margin-top: 2rem;
 }
 
+.error{
+    font-size:small;
+    color: red;
+}
+
 input{
     padding: 5px;
     margin-top: 8px;
     width: 100%;
-    display: block;
+    display: block;   
 }
 
 textarea{
@@ -103,16 +108,19 @@ form button:focus{
 }
 
 label{
-    margin-top: 15px;
+    margin-top: 10px;
     display: block;
     /* width: 50px; */
 }
 
-#my_form,
-#pesel_data{
+#my_form{
     width: 30%;
     display: flex;
     flex-direction: column;
+}
+
+#pesel_data{
+    width: 30%;
 }
 
 nav{
@@ -130,4 +138,8 @@ a{
 
 .buttons{
     align-self: flex-end;
+}
+
+.error{
+    display: none;
 }

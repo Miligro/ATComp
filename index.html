@@ -12,34 +12,32 @@
                 <div>
                     <label for="first_name">Imię:</label>
                     <input type="text" name="first_name" id="first_name" >
+                    <p class="error" id="invalid_first_name">Niepoprawne imię</p>
                 </div>
                 <div>
                     <label for="last_name">Nazwisko:</label>
                     <input type="text" name="last_name" id="last_name">
+                    <p class="error" id="invalid_last_name">Niepoprawne nazwisko</p>
                 </div>
                 <div>
                 </div>
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email">
+                    <p class="error" id="invalid_email">Niepoprawny email</p>
                 </div>
                 <div>
                     <label for="description">Opis:</label>
                     <textarea name="description" id="description" rows="5"></textarea>
-                </div>
-                <div>
-                    <label for="gender">Płeć:</label>
-                    <select name="gender" id="gender">
-                        <option value="man">Mężczyzna</option>
-                        <option value="woman">Kobieta</option>
-                    </select>
+                    <p class="error" id="invalid_description">Niepoprawny opis</p>
                 </div>
                 <div>
                     <label for="pesel">PESEL:</label>
                     <input type="text" name="pesel" id="pesel">
+                    <p class="error" id="invalid_pesel">Niepoprawny pesel</p>
                 </div>
+                
                 <div class="buttons">
                     <button type="button" id="save_button">Zapisz</button>
-                    <button type="button" id="confirm_pesel">Zatwierdź pesel</button>
                 </div>
             </form>
             <div id="pesel_data">
