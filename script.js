@@ -126,19 +126,7 @@ function checkDescription(){
 });
 
 ['keyup', 'focusout'].forEach(ev =>{
-    email.addEventListener(ev, (e)=>{
-        if(!checkEmail()){
-            email.style.border = '1px solid red';
-            invalidEmail.style.display = 'block'
-        }else{
-            email.style.border = '1px solid black'; 
-            invalidEmail.style.display = 'none'
-        }
-    })
-});
-
-['keyup', 'focusout'].forEach(ev =>{
-    description.addEventListener(ev, (e)=>{
+    description.addEventListener("focusout", (e)=>{
         if(!checkDescription()){
             description.style.border = '1px solid red';
             invalidDescription.style.display = 'block'
@@ -149,17 +137,26 @@ function checkDescription(){
     })
 });
 
-['keyup', 'focusout'].forEach(ev =>{
-    pesel.addEventListener(ev, (e)=>{
-        if(!checkPesel()){
-            pesel.style.border = '1px solid red';
-            invalidPesel.style.display = 'block'
-        }else{
-            pesel.style.border = '1px solid black'; 
-            invalidPesel.style.display = 'none'
-        }
-    })
-});
+email.addEventListener('focusout', (e)=>{
+    if(!checkEmail()){
+        email.style.border = '1px solid red';
+        invalidEmail.style.display = 'block'
+    }else{
+        email.style.border = '1px solid black'; 
+        invalidEmail.style.display = 'none'
+    }
+})
+
+
+pesel.addEventListener('focusout', (e)=>{
+    if(!checkPesel()){
+        pesel.style.border = '1px solid red';
+        invalidPesel.style.display = 'block'
+    }else{
+        pesel.style.border = '1px solid black'; 
+        invalidPesel.style.display = 'none'
+    }
+})
 
 function getPeselData(){
     born.value = "";
