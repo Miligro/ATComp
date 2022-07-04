@@ -9,34 +9,38 @@ const gender = myForm.elements.gender;
 saveBtn.addEventListener("click", (event)=>{
     const elem = document.getElementById("data");
     if(elem){
-        elem.innerHTML = "";
+        elem.remove();
     }
     if(checkForm()){
-        const el = document.createElement("div");
-        el.setAttribute('id', 'data');
-        
-        const firstNameEl = document.createElement("p")
-        firstNameEl.innerText = `Imię: ${firstName.value}`;
-        const lastNameEl = document.createElement("p")
-        lastNameEl.innerText = `Nazwisko: ${lastName.value}`;
-        const emailEl = document.createElement("p")
-        emailEl.innerText = `Email: ${email.value}`;
-        const descriptionEl = document.createElement("p")
-        descriptionEl.innerText = `Opis: ${description.value}`
-        const genderEl = document.createElement("p");
-        genderEl.innerText = `Płeć: ${gender.value === "man" ? "Mężczyzna" : "Kobieta"}`
-        el.appendChild(firstNameEl);
-        el.appendChild(lastNameEl);
-        el.appendChild(emailEl);
-        el.appendChild(descriptionEl);
-        el.appendChild(genderEl);
-        document.body.appendChild(el);
+        appendData();
         myForm.reset();
     }else{
         alert("Niepoprawne dane!");
     };
     
 })
+
+function appendData(){
+    const el = document.createElement("div");
+    el.setAttribute('id', 'data');
+    
+    const firstNameEl = document.createElement("p")
+    firstNameEl.innerText = `Imię: ${firstName.value}`;
+    const lastNameEl = document.createElement("p")
+    lastNameEl.innerText = `Nazwisko: ${lastName.value}`;
+    const emailEl = document.createElement("p")
+    emailEl.innerText = `Email: ${email.value}`;
+    const descriptionEl = document.createElement("p")
+    descriptionEl.innerText = `Opis: ${description.value}`
+    const genderEl = document.createElement("p");
+    genderEl.innerText = `Płeć: ${gender.value === "man" ? "Mężczyzna" : "Kobieta"}`
+    el.appendChild(firstNameEl);
+    el.appendChild(lastNameEl);
+    el.appendChild(emailEl);
+    el.appendChild(descriptionEl);
+    el.appendChild(genderEl);
+    document.body.appendChild(el);
+}
 
 function checkForm(){
     const emailRegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
