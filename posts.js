@@ -5,7 +5,7 @@ const title = document.getElementById('title');
 const userId = document.getElementById('user_id');
 const content = document.getElementById('content');
 const sort = document.getElementById('sort');
-
+const sortOrder = document.getElementById('sort_order')
 posts = []
 
 function getPosts(){
@@ -46,19 +46,38 @@ function showPosts(postsToShow){
     postsMain.appendChild(postsEl);
 }
 
-filterBtn.addEventListener('click', ()=>{
+function filterFunction(){
     let postsShow = posts.filter((post) => { return post.title.toLowerCase().includes(title.value.toLowerCase())});
     postsShow = postsShow.filter((post) => post.body.toLowerCase().includes(content.value.toLowerCase()));
     if(+userId.value){
         postsShow = postsShow.filter((post) => +post.userId === +userId.value);
     }
+    
     postsShow = postsShow.sort((a, b) => {
-        if(a[sort.value] < b[sort.value]) { return -1; }
-        if(a[sort.value] > b[sort.value]) { return 1; }
-        return 0;
+        if(sortOrder.value === 'desc'){
+            if(a[sort.value] < b[sort.value]) { return -1; }
+            if(a[sort.value] > b[sort.value]) { return 1; }
+            return 0;
+        }else{
+            if(a[sort.value] > b[sort.value]) { return -1; }
+            if(a[sort.value] < b[sort.value]) { return 1; }
+            return 0;
+        }
     })
-    console.log(postsShow);
     showPosts(postsShow);
+}
+
+filterBtn.addEventListener('click', filterFunction)
+
+sortOrder.addEventListener('click', ()=>{
+    if(sortOrder.value === 'desc'){
+        sortOrder.innerHTML = "&#8595;";
+        sortOrder.value = 'asc';
+    }else{
+        sortOrder.value = 'desc';
+        sortOrder.innerHTML = '&#8593;'
+    };
+    filterFunction();
 })
 
 getPosts(posts);

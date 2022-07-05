@@ -98,17 +98,35 @@ select{
     padding: 5px;
 }
 
-form button{
+.filter_button{
+    padding: 8px;
+    margin: auto 0;
+    background-color: #0275d8;
+    border: none;
+    border-radius: 6px;
+    width: 80px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+.filter_button:hover{
+    background-color: #0280ee;
+    border: 1px solid #0275d8;
+}
+
+.save_button{
     margin-top: 10px;
     padding: 10px;
+    width: 70px;
     background-color: #5cb85c;
     border: 1px solid #5cb85c;
     border-radius: 5px;
     color: black;
 }
 
-form button:hover,
-form button:focus{
+.save_button button:hover,
+.save_button button:focus{
     cursor: pointer;
     border: 1px solid black;
 }
@@ -238,26 +256,19 @@ h1{
     gap: 10px;
 }
 
-
-#template button{
-    padding: 8px;
-    margin: auto 0;
-    background-color: #0275d8;
-    border: none;
-    border-radius: 6px;
-    width: 80px;
-    font-size: 15px;
-    font-weight: bold;
-    color: white;
-}
-
-#template button:hover{
-    background-color: #0280ee;
-    border: 1px solid #0275d8;
-}
-
 .filter_con{
     display: flex; 
     flex-direction: column;
     width: 40%;
+}
+
+.sort_order{
+    font-size: 25px;
+    background-color: white;
+    border: none;
+    width: 30px;
+    margin-right: 10px;
+    /* border-radius: 5px; */
+    /* margin: 15px 10px; */
+    cursor: pointer;
 }
