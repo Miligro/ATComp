@@ -2,10 +2,11 @@
   "name": "atcomp",
   "version": "1.0.0",
   "description": "",
-  "main": "script.js",
+  "type": "commonjs",
+  "main": "index.js",
   "source": "index.html",
   "scripts": {
-    "start": "parcel",
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

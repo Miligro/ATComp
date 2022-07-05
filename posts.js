@@ -1,5 +1,5 @@
 import axios from "axios";
-const postsMain = document.getElementById('posts_main');
+const postsMain = document.getElementById('template');
 const filterBtn = document.getElementById('filter_button');
 const title = document.getElementById('title');
 const userId = document.getElementById('user_id');
@@ -18,7 +18,6 @@ function getPosts(){
 function showPosts(postsToShow){
     const el = document.getElementById('posts_card');
     if(el){
-        // el.innerHTML = ""
         el.remove();
     }
     const postsEl = document.createElement('div');
@@ -48,7 +47,6 @@ function showPosts(postsToShow){
 }
 
 filterBtn.addEventListener('click', ()=>{
-    
     let postsShow = posts.filter((post) => { return post.title.toLowerCase().includes(title.value.toLowerCase())});
     postsShow = postsShow.filter((post) => post.body.toLowerCase().includes(content.value.toLowerCase()));
     if(+userId.value){

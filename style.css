@@ -239,7 +239,7 @@ h1{
 }
 
 
-#posts_main button{
+#template button{
     padding: 8px;
     margin: auto 0;
     background-color: #0275d8;
@@ -251,7 +251,7 @@ h1{
     color: white;
 }
 
-#posts_main button:hover{
+#template button:hover{
     background-color: #0280ee;
     border: 1px solid #0275d8;
 }

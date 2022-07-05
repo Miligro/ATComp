@@ -1,47 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Document</title>
-</head>
-<body>
-    <nav class="head_nav">
-        <h2>Test page</h2>
-        <a href="https://github.com/Miligro/ATComp">GitHub</a>
-    </nav>
-    <nav class="side_nav">
-        <a href="sss">
-            <div class="navigation_con" id="form_btn">
-                Formularz
-            </div>
-        </a>
-        <a href="sa">
-            <div class="navigation_con" id="posts_btn">
-                Posty
-            </div>
-        </a>
-    </nav>
-    <main id="posts_main">
-        <h1>Posty</h1>
-        <hr>
-        <div class="filter_con">
-            <div class="row">
-                <input type="text" id="title" name="title" placeholder="Tytuł">
-                <input type="text" id="user_id" name="user_id" placeholder="ID Użytkownika">
-            </div>
-            <div class="row">
-                <input type="text" id="content" name="content" placeholder="Zawartość">
-            </div>
-            <div class="row">
-                <p>Sortuj <select name="sort" id="sort">
-                    <option value="title">Tytuł</option>
-                    <option value="userId">ID Użytkownika</option>
-                    <option value="body">Zawartość</option>
-                </select></p>
-                <button id="filter_button">Filtruj</button>
-            </div>
-        </div>
-    </main>
-    <script src="posts.js" type="module"></script>
-    <link rel="stylesheet" href="style.css">
-</body>
-</html>
+<h1>Posty</h1>
+<hr>
+<div class="filter_con">
+    <div class="row">
+        <input type="text" id="title" name="title" placeholder="Tytuł">
+        <input type="text" id="user_id" name="user_id" placeholder="ID Użytkownika">
+    </div>
+    <div class="row">
+        <input type="text" id="content" name="content" placeholder="Zawartość">
+    </div>
+    <div class="row">
+        <p>Sortuj <select name="sort" id="sort">
+            <option value="title">Tytuł</option>
+            <option value="userId">ID Użytkownika</option>
+            <option value="body">Zawartość</option>
+        </select></p>
+        <button id="filter_button">Filtruj</button>
+    </div>
+</div>
+<!-- <script src="posts.js" type="module"></script> -->
