@@ -1,14 +1,12 @@
+import {validateListener, validateInputs} from "./validation";
 const saveBtn = document.getElementById('save_button')
 const myForm = document.forms['my_form']
 const firstName = myForm.elements.first_name;
 const lastName = myForm.elements.last_name;
 const email = myForm.elements.email;
 const description = myForm.elements.description;
-const gender = myForm.elements.gender;
 const pesel = myForm.elements.pesel;
-const alertDialog = document.getElementById('alertDialog');
-const closeDialogBtn = document.getElementById('closeDialogBtn');
-const main = document.getElementById('main');
+const formMain = document.getElementById('form_main');
 
 const born = document.getElementById('born');
 const peselGender = document.getElementById('pesel_gender');
@@ -19,6 +17,8 @@ const invalidLastName = document.getElementById('invalid_last_name');
 const invalidEmail = document.getElementById('invalid_email');
 const invalidDescription = document.getElementById('invalid_description');
 const invalidPesel = document.getElementById('invalid_pesel');
+
+
 
 const toValid = [
     {
@@ -48,10 +48,11 @@ const toValid = [
     {
         label: 'pesel',
         elem: pesel,
-        regex: "",
+        regex: /^[0-9]/,
         invalid: invalidPesel,
     }
 ]
+validateListener(toValid);
 
 saveBtn.addEventListener("click", ()=>{
     const elem = document.getElementById("data");
@@ -62,50 +63,13 @@ saveBtn.addEventListener("click", ()=>{
     if(elCheckNum){
         elCheckNum.remove();
     }
-    if(validateInputs()){
+    if(validateInputs(toValid)){
         getPeselData();
         appendData();
         myForm.reset();
-    }
-    
+    }    
 });
 
-function checkFunction(elem, regex){
-    if(regex){
-        if(!elem.value.trim() || !regex.test(elem.value)){
-            return false;
-        }
-    } else if(!elem.value.trim()){
-        return false;
-    }
-    return true;
-}
-
-function validateInputs(){
-    for(key in toValid) {
-        let el = toValid[key]
-        if(!checkFunction(el.elem,el.regex)){
-            errorDialog(`Podano niepoprawne ${el.label}!`);
-            return false;   
-        }
-    }
-    return true;
-}
-
-['keyup', 'focusout'].forEach(ev =>{
-    for(key in toValid) {
-        let el = toValid[key]
-        el.elem.addEventListener(ev, ()=>{
-            if(!checkFunction(el.elem,el.regex)){
-                el.invalid.style.display = 'block'
-                el.elem.style.border = '1px solid red';
-            }else{
-                el.invalid.style.display = 'none'
-                el.elem.style.border = '1px solid black'; 
-            }
-        })
-    }
-});
 
 function getPeselData(){
     born.value = "";
@@ -155,41 +119,7 @@ function appendData(){
     el.appendChild(lastNameEl);
     el.appendChild(emailEl);
     el.appendChild(descriptionEl);
-    main.appendChild(el);
+    formMain.appendChild(el);
 }
 
-function errorDialog(msg){
-    const alertDialog = document.createElement("div");
-    alertDialog.setAttribute('class', 'alert-dialog');
-    alertDialog.setAttribute('id', 'alert-dialog');
-    
-    window.onclick = function(event) {
-        if (event.target == alertDialog) {
-            alertDialog.remove();
-        }
-    } 
-    
-    const alertContent = document.createElement("div");
-    alertContent.setAttribute('class', 'alert-content');
 
-    const errorIcon = document.createElement("span");
-    errorIcon.setAttribute('class', 'error-icon');
-    errorIcon.innerText = "!";
-
-    const messagePara = document.createElement("p");
-    messagePara.innerText = msg;
-
-    const closeBtn = document.createElement("button");
-    closeBtn.setAttribute('id', 'close-dialog-btn');
-    closeBtn.innerText = "Zamknij";
-
-    closeBtn.addEventListener('click', ()=>{
-        alertDialog.remove();
-    })
-
-    alertContent.appendChild(errorIcon);
-    alertContent.appendChild(messagePara);
-    alertContent.appendChild(closeBtn);
-    alertDialog.appendChild(alertContent);
-    document.body.appendChild(alertDialog);
-}

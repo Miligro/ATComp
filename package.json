@@ -1,0 +1,30 @@
+{
+  "name": "atcomp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "source": "index.html",
+  "scripts": {
+    "start": "parcel",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miligro/ATComp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Miligro/ATComp/issues"
+  },
+  "homepage": "https://github.com/Miligro/ATComp#readme",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "parcel": "latest",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "jquery": "^3.6.0"
+  }
+}

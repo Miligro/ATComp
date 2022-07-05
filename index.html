@@ -4,33 +4,47 @@
         
     </head>
     <body>
-        <nav>
+        <nav class="head_nav">
+            <h2>Test page</h2>
             <a href="https://github.com/Miligro/ATComp">GitHub</a>
         </nav>
-        <main class="main" id="main">
+        <nav class="side_nav">
+            <a href="sss">
+                <div class="navigation_con" id="form_btn">
+                    Formularz
+                </div>
+            </a>
+            <a href="sa">
+                <div class="navigation_con" id="posts_btn">
+                    Posty
+                </div>
+            </a>
+        </nav>
+        <main class="main" id="form_main">
+            <h1>Formularz</h1>
+            <hr>
             <form id="my_form" name="my_form">
-                <div>
+                <div class="form_input">
                     <label for="first_name">Imię:</label>
                     <input type="text" name="first_name" id="first_name" >
                     <p class="error" id="invalid_first_name">Niepoprawne imię</p>
                 </div>
-                <div>
+                <div class="form_input">
                     <label for="last_name">Nazwisko:</label>
                     <input type="text" name="last_name" id="last_name">
                     <p class="error" id="invalid_last_name">Niepoprawne nazwisko</p>
                 </div>
-                <div>
-                </div>
+                <div class="form_input">
                     <label for="email">Email:</label>
                     <input type="email" name="email" id="email">
                     <p class="error" id="invalid_email">Niepoprawny email</p>
                 </div>
-                <div>
+                <div class="form_input">
                     <label for="description">Opis:</label>
                     <textarea name="description" id="description" rows="5"></textarea>
                     <p class="error" id="invalid_description">Niepoprawny opis</p>
                 </div>
-                <div>
+                <div class="form_input">
                     <label for="pesel">PESEL:</label>
                     <input type="text" name="pesel" id="pesel">
                     <p class="error" id="invalid_pesel">Niepoprawny pesel</p>
@@ -40,12 +54,12 @@
                     <button type="button" id="save_button">Zapisz</button>
                 </div>
             </form>
-            <div id="pesel_data">
+            <div id="pesel_data" class="form_input">
                 <input type="text" disabled id="born" value="Data urodzenia:">
                 <input type="text" disabled id="pesel_gender" value="Płeć: ">
             </div>
         </main>
-        <script src="script.js"></script>
+        <script src="script.js" type="module"></script>
         <link rel="stylesheet" href="style.css">
     </body>
 </html>
