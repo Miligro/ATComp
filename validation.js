@@ -9,6 +9,34 @@ export function validateInputs(toValid){
     return true;
 }
 
+export function validatePesel(pesel){
+    if(pesel.length !== 11){
+        errorDialog(`Podano niepoprawny pesel!`);
+        console.log('s')
+        return false
+    }
+    let sum = 0;
+    for(let i = 0; i < 10; i++){
+        if(i % 4 == 0){
+            sum += (+pesel[i] * 1) % 10;
+        } else if(i % 4 == 1){
+            sum += (+pesel[i] * 3) % 10;
+        } else if(i % 4 == 2){
+            sum += (+pesel[i] * 7) % 10;
+        } else{
+            sum += (+pesel[i] * 9) % 10;
+        }
+    }
+    sum %= 10;
+    checkNumber = 10 - sum;
+    console.log(checkNumber);
+    if(+pesel[10] !== checkNumber){
+        errorDialog(`Podano niepoprawny pesel!`);
+        return false
+    }
+    return true;
+}
+
 export function validateListener(toValid){
     ['keyup', 'focusout'].forEach(ev =>{
         for(key in toValid) {
@@ -27,11 +55,12 @@ export function validateListener(toValid){
 }
 
 function checkFunction(elem, regex){
+    let value = elem.value || ''
     if(regex){
-        if(!elem.value.trim() || !regex.test(elem.value)){
+        if(!value.trim() || !regex.test(value)){
             return false;
         }
-    } else if(!elem.value.trim()){
+    } else if(!value.trim()){
         return false;
     }
     return true;

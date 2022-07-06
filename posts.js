@@ -24,44 +24,28 @@ function showPosts(postsToShow){
     postsEl.setAttribute('id', 'posts_card');
 
     for(key in postsToShow){
-        const postEl = document.createElement('div');
-        postEl.setAttribute('class', 'post_card');
-        
-        const titleEl = document.createElement('h2');
-        titleEl.innerText = postsToShow[key].title;
-        
-        const userIdEl = document.createElement('p');
-        userIdEl.setAttribute('class', 'user_id');
-        userIdEl.innerText = `ID Użytkownika: ${postsToShow[key].userId}`;
-        
-        const contentEl = document.createElement('p');
-        contentEl.setAttribute('class', 'content');
-        contentEl.innerText = postsToShow[key].body;
-        
-        postEl.appendChild(titleEl);
-        postEl.appendChild(userIdEl);
-        postEl.appendChild(contentEl);
-        postsEl.appendChild(postEl)
+        postsEl.innerHTML += `
+        <div class="post_card">
+            <h2>${postsToShow[key].title}</h2>
+            <p class="user_id">ID Użytkownika: ${postsToShow[key].userId}</p>
+            <p class="content">${postsToShow[key].body}</p>
+        </div>`
     }
     postsMain.appendChild(postsEl);
 }
 
 function filterFunction(){
-    let postsShow = posts.filter((post) => { return post.title.toLowerCase().includes(title.value.toLowerCase())});
-    postsShow = postsShow.filter((post) => post.body.toLowerCase().includes(content.value.toLowerCase()));
+    let postsShow = posts.filter((post) => post.title.toLowerCase().search(title.value.toLowerCase()) >= 0);
+    postsShow = postsShow.filter((post) => post.body.toLowerCase().search(content.value.toLowerCase()) >= 0);
     if(+userId.value){
         postsShow = postsShow.filter((post) => +post.userId === +userId.value);
     }
     
     postsShow = postsShow.sort((a, b) => {
         if(sortOrder.value === 'desc'){
-            if(a[sort.value] < b[sort.value]) { return -1; }
-            if(a[sort.value] > b[sort.value]) { return 1; }
-            return 0;
+            return a[sort.value] >= b[sort.value] ? 1 : -1;
         }else{
-            if(a[sort.value] > b[sort.value]) { return -1; }
-            if(a[sort.value] < b[sort.value]) { return 1; }
-            return 0;
+            return a[sort.value] <= b[sort.value] ? 1 : -1;
         }
     })
     showPosts(postsShow);
@@ -70,12 +54,12 @@ function filterFunction(){
 filterBtn.addEventListener('click', filterFunction)
 
 sortOrder.addEventListener('click', ()=>{
-    if(sortOrder.value === 'desc'){
-        sortOrder.innerHTML = "&#8595;";
-        sortOrder.value = 'asc';
-    }else{
+    if(sortOrder.value === 'asc'){
+        sortOrder.innerHTML = "&#8593;";
         sortOrder.value = 'desc';
-        sortOrder.innerHTML = '&#8593;'
+    }else{
+        sortOrder.value = 'asc';
+        sortOrder.innerHTML = '&#8595;'
     };
     filterFunction();
 })

@@ -1,4 +1,4 @@
-import {validateListener, validateInputs} from "./validation";
+import {validateListener, validateInputs, validatePesel} from "./validation";
 const saveBtn = document.getElementById('save_button')
 const myForm = document.forms['my_form']
 const firstName = myForm.elements.first_name;
@@ -6,7 +6,7 @@ const lastName = myForm.elements.last_name;
 const email = myForm.elements.email;
 const description = myForm.elements.description;
 const pesel = myForm.elements.pesel;
-const formMain = document.getElementById('form_main');
+const formMain = document.getElementById('template');
 
 const born = document.getElementById('born');
 const peselGender = document.getElementById('pesel_gender');
@@ -63,62 +63,47 @@ saveBtn.addEventListener("click", ()=>{
     if(elCheckNum){
         elCheckNum.remove();
     }
-    if(validateInputs(toValid)){
+    if(validateInputs(toValid) && validatePesel(pesel.value)){
         getPeselData();
         appendData();
         myForm.reset();
     }    
-});
+}); 
 
 
 function getPeselData(){
     born.value = "";
     const yearTemp = +pesel.value.slice(0,2);
-    let year = 1900 + yearTemp + (Math.floor(+pesel.value.slice(2,3)/2) * 100);
+    let year = 1900 + yearTemp + (Math.floor(+pesel.value[2]/2) * 100);
     let month = +pesel.value.slice(2,4);
-    month = month > 20 ? month - 20 : month;
+    month = month % 20;
     const day = pesel.value.slice(4,6);
     born.value = `Data urodzenia: ${day}-${month < 10 ? '0' + month : month}-${year}`;
 
     peselGender.value = `Płeć: ${+pesel.value.slice(9,10) % 2 == 0 ? "Kobieta" : "Mężczyzna"}`;
 
-    let sum = 0;
-    for(let i = 0; i < 10; i++){
-        if(i % 4 == 0){
-            sum += (+pesel.value[i] * 1) % 10;
-        } else if(i % 4 == 1){
-            sum += (+pesel.value[i] * 3) % 10;
-        } else if(i % 4 == 2){
-            sum += (+pesel.value[i] * 7) % 10;
-        } else{
-            sum += (+pesel.value[i] * 9) % 10;
-        }
-    }
-    sum %= 10;
-    checkNumber = 10 - sum;
-
-    checkNumberEl = document.createElement('p');
-    checkNumberEl.setAttribute('id', 'check_number');
-    checkNumberEl.innerText = `Suma kontrolna: ${checkNumber}`;
-    peselData.appendChild(checkNumberEl);
+    
 }
 
 function appendData(){
     const el = document.createElement("div");
     el.setAttribute('id', 'data');
     
-    const firstNameEl = document.createElement("p")
+    const firstNameEl = document.createElement("p");
     firstNameEl.innerText = `Imię: ${firstName.value}`;
-    const lastNameEl = document.createElement("p")
+    const lastNameEl = document.createElement("p");
     lastNameEl.innerText = `Nazwisko: ${lastName.value}`;
-    const emailEl = document.createElement("p")
+    const emailEl = document.createElement("p");
     emailEl.innerText = `Email: ${email.value}`;
-    const descriptionEl = document.createElement("p")
-    descriptionEl.innerText = `Opis: ${description.value}`
+    const descriptionEl = document.createElement("p");
+    descriptionEl.innerText = `Opis: ${description.value}`;
+    const peselEl = document.createElement("p");
+    peselEl.innerText = `PESEL: ${pesel.value}`;
     el.appendChild(firstNameEl);
     el.appendChild(lastNameEl);
     el.appendChild(emailEl);
     el.appendChild(descriptionEl);
+    el.appendChild(peselEl);
     formMain.appendChild(el);
 }
 
