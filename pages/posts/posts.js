@@ -8,13 +8,13 @@ const content = document.getElementById('content');
 const sort = document.getElementById('sort');
 const sortOrder = document.getElementById('sort_order')
 let posts = []
-
+let postsShow = []
 const loadingEl = showLoading(document.getElementById('template'));
 
 function getPosts(){
     axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
         posts = res.data;
-        showPosts(posts);
+        checkStorage();
         destroyLoading(loadingEl);
     }).catch(err => console.log(err));
 }
@@ -39,7 +39,7 @@ function showPosts(postsToShow){
 }
 
 function filterFunction(){
-    let postsShow = posts.filter((post) => post.title.toLowerCase().search(title.value.toLowerCase()) >= 0);
+    postsShow = posts.filter((post) => post.title.toLowerCase().search(title.value.toLowerCase()) >= 0);
     postsShow = postsShow.filter((post) => post.body.toLowerCase().search(content.value.toLowerCase()) >= 0);
     if(+userId.value){
         postsShow = postsShow.filter((post) => +post.userId === +userId.value);
@@ -55,18 +55,40 @@ function filterFunction(){
     showPosts(postsShow);
 }
 
-filterBtn.addEventListener('click', filterFunction)
-
-sortOrder.addEventListener('click', ()=>{
-    if(sortOrder.value === 'asc'){
-        sortOrder.innerHTML = "&#8593;";
-        sortOrder.value = 'desc';
-    }else{
-        sortOrder.value = 'asc';
-        sortOrder.innerHTML = '&#8595;'
-    };
+filterBtn.addEventListener('click', ()=>{
+    localStorage.setItem('title', title.value);
+    localStorage.setItem('content', content.value);
+    localStorage.setItem('userId', userId.value);
+    localStorage.setItem('sort', sort.value);
+    localStorage.setItem('sortOrder', sortOrder.value);
     filterFunction();
 })
 
+sortOrder.addEventListener('click', ()=>{
+    if(sortOrder.value === 'asc'){
+        sortOrder.innerHTML = "&#8595;";
+        sortOrder.value = 'desc';
+    }else{
+        sortOrder.value = 'asc';
+        sortOrder.innerHTML = '&#8593;'
+    };
+    localStorage.setItem('sortOrder', sortOrder.value);
+    filterFunction();
+})
+
+
+function checkStorage(){
+    title.value = localStorage.getItem('title');
+    content.value = localStorage.getItem('content');
+    userId.value = localStorage.getItem('userId');
+    sort.value = localStorage.getItem('sort');
+    sortOrder.value = localStorage.getItem('sortOrder');
+    if(sortOrder.value === 'asc'){
+        sortOrder.innerHTML = "&#8593;";
+    }else{
+        sortOrder.innerHTML = "&#8595;";
+    }
+    filterFunction();
+}
 
 getPosts(posts);
