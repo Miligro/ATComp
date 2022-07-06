@@ -6,7 +6,7 @@ const userId = document.getElementById('user_id');
 const content = document.getElementById('content');
 const sort = document.getElementById('sort');
 const sortOrder = document.getElementById('sort_order')
-posts = []
+let posts = []
 
 function getPosts(){
     axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {

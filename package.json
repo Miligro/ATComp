@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
-  "main": "index.js",
-  "source": "index.html",
+  "main": "main/index.js",
+  "source": "main/index.html",
   "scripts": {
-    "start": "parcel index.html",
+    "start": "parcel main/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,11 +21,10 @@
   "homepage": "https://github.com/Miligro/ATComp#readme",
   "devDependencies": {
     "buffer": "^6.0.3",
-    "parcel": "latest",
+    "parcel": "2.0.0-nightly.688",
     "process": "^0.11.10"
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "jquery": "^3.6.0"
+    "axios": "^0.27.2"
   }
 }

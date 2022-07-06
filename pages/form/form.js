@@ -1,4 +1,4 @@
-import {validateListener, validateInputs, validatePesel} from "./validation";
+import {validateListener, validateInputs, validatePesel} from "../../validation";
 const saveBtn = document.getElementById('save_button')
 const myForm = document.forms['my_form']
 const firstName = myForm.elements.first_name;
