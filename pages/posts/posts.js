@@ -1,4 +1,5 @@
 import axios from "axios";
+import { show as showLoading, destroy as destroyLoading } from "../../loading";
 const postsMain = document.getElementById('template');
 const filterBtn = document.getElementById('filter_button');
 const title = document.getElementById('title');
@@ -8,28 +9,13 @@ const sort = document.getElementById('sort');
 const sortOrder = document.getElementById('sort_order')
 let posts = []
 
-const loadingEl = document.createElement('div')
-loadingEl.setAttribute('class', 'loading-small')
-loadingEl.innerHTML = `
-<h2>Wczytywanie</h2>
-<div class="loading-items">
-    <div class="loading-item-1"></div>
-    <div class="loading-item-2"></div>
-    <div class="loading-item-3"></div>
-    <div class="loading-item-4"></div>
-    <div class="loading-item-5"></div>
-    <div class="loading-item-6"></div>
-    <div class="loading-item-7"></div>
-    <div class="loading-item-8"></div>
-</div>
-`
-document.getElementById('template').appendChild(loadingEl)
+const loadingEl = showLoading(document.getElementById('template'));
 
 function getPosts(){
     axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
         posts = res.data;
         showPosts(posts);
-        loadingEl.remove();
+        destroyLoading(loadingEl);
     }).catch(err => console.log(err));
 }
 
