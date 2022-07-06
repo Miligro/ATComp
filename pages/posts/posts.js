@@ -8,10 +8,28 @@ const sort = document.getElementById('sort');
 const sortOrder = document.getElementById('sort_order')
 let posts = []
 
+const loadingEl = document.createElement('div')
+loadingEl.setAttribute('class', 'loading-small')
+loadingEl.innerHTML = `
+<h2>Wczytywanie</h2>
+<div class="loading-items">
+    <div class="loading-item-1"></div>
+    <div class="loading-item-2"></div>
+    <div class="loading-item-3"></div>
+    <div class="loading-item-4"></div>
+    <div class="loading-item-5"></div>
+    <div class="loading-item-6"></div>
+    <div class="loading-item-7"></div>
+    <div class="loading-item-8"></div>
+</div>
+`
+document.getElementById('template').appendChild(loadingEl)
+
 function getPosts(){
     axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
         posts = res.data;
         showPosts(posts);
+        loadingEl.remove();
     }).catch(err => console.log(err));
 }
 
@@ -63,5 +81,6 @@ sortOrder.addEventListener('click', ()=>{
     };
     filterFunction();
 })
+
 
 getPosts(posts);
