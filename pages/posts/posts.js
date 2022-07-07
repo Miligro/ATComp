@@ -1,20 +1,87 @@
-import axios from "axios";
+import { get } from '../../api.js'
 import { show as showLoading, destroy as destroyLoading } from "../../loading";
+import {createFilters, onFilter as filterPosts, checkStorage } from "../../filters.js"
 const postsMain = document.getElementById('template');
-
-const filterForm = document.forms[0]
-let inputs = ['title', 'userId', 'content', 'sort', 'sortOrder']
 
 let posts = []
 let postsShow = []
+
+const filters = [
+    {
+        placeholder: 'Tytuł',
+        type: 'text',
+        id: 'title',
+    },
+    {
+        placeholder: 'ID Użytkownika',
+        type: 'number',
+        id: 'userId',
+    },
+    {
+        placeholder: 'Zawartość',
+        type: 'text',
+        id: 'body',
+    },
+    {
+        type: 'select',
+        options: [
+            {
+                value: 'title',
+                text: 'Tytuł'
+            },
+            {
+                value: 'userId',
+                text: 'ID użytkownika'
+            },
+            {
+                value: 'body',
+                text: 'Zawartość'
+            }
+        ],
+        id: 'sort',
+    },
+]
 const loadingEl = showLoading(document.getElementById('template'));
 
-function getPosts(){
-    axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
-        posts = res.data;
-        checkStorage();
-        destroyLoading(loadingEl);
-    }).catch(err => console.log(err));
+async function getPosts(){
+    posts = await get('https://jsonplaceholder.typicode.com/posts')
+    checkStorage();
+    destroyLoading(loadingEl);
+}
+
+async function getComments(id){
+    const commentBtn = document.getElementById(`comment${id}`);
+    if(commentBtn.value === 'closed'){
+        const comments = await get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+
+        const postEl = document.getElementById(`post${id}`).nextSibling;
+        const commentsEl = document.createElement('div')
+        commentsEl.setAttribute('id', `comments${id}`)
+        commentsEl.setAttribute('class', 'comments-card');
+        for(let comment of comments){
+            commentsEl.innerHTML += `
+            <div class="comment-card">
+                <h3>${comment.name}</h3>
+                <p>${comment.body}</p>
+                <p class='small'>email: ${comment.email}</p>
+                <hr>
+            </div>
+            `
+        }
+        postsCard = document.getElementById('posts_card');
+        if(postEl){
+            postsCard.insertBefore(commentsEl, postEl);
+        }else{
+            postsCard.appendChild(commentsEl)
+        }
+        commentBtn.innerHTML = "Komentarze &#8595;"
+        commentBtn.value = 'opened'
+    }else{
+        const commentsEl = document.getElementById(`comments${id}`)
+        commentsEl.remove()
+        commentBtn.innerHTML = "Komentarze &#8593;"
+        commentBtn.value = 'closed'
+    }
 }
 
 function showPosts(postsToShow){
@@ -26,71 +93,32 @@ function showPosts(postsToShow){
     postsEl.setAttribute('id', 'posts_card');
 
     for(key in postsToShow){
-        postsEl.innerHTML += `
-        <div class="post_card">
+        const postCard = document.createElement('div');
+        postCard.setAttribute('class', 'post_card');
+        postCard.setAttribute('id', `post${postsToShow[key].id}`)
+        postCard.innerHTML = `
             <h2>${postsToShow[key].title}</h2>
             <p class="user_id">ID Użytkownika: ${postsToShow[key].userId}</p>
-            <p class="content">${postsToShow[key].body}</p>
-        </div>`
+            <p class="content">${postsToShow[key].body}</p>`
+            
+        const commentBtn = document.createElement('button');
+        commentBtn.setAttribute('id', `comment${postsToShow[key].id}`);
+        commentBtn.setAttribute('value', 'closed');
+        commentBtn.innerHTML = "Komentarze &#8593;"
+        postCard.appendChild(commentBtn);
+        postsEl.appendChild(postCard);
+
+        commentBtn.addEventListener('click', (e)=>{
+            getComments(+e.target.id.slice(7));
+        })
     }
     postsMain.appendChild(postsEl);
 }
 
-function filterFunction(){
-    postsShow = posts.filter((post) => post.title.toLowerCase().search(filterForm['title'].value.toLowerCase()) >= 0);
-    postsShow = postsShow.filter((post) => post.body.toLowerCase().search(filterForm['content'].value.toLowerCase()) >= 0);
-    if(+filterForm['userId'].value){
-        postsShow = postsShow.filter((post) => +post.userId === +filterForm['userId'].value);
-    }
-    
-    postsShow = postsShow.sort((a, b) => {
-        if(filterForm['sortOrder'].value === 'desc'){
-            return a[filterForm['sort'].value] >= b[filterForm['sort'].value] ? 1 : -1;
-        }else{
-            return a[filterForm['sort'].value] <= b[filterForm['sort'].value] ? 1 : -1;
-        }
-    })
+getPosts();
+createFilters(filters);
+
+window.document.addEventListener('filter', ()=>{
+    postsShow = filterPosts(posts);
     showPosts(postsShow);
-}
-
-filterForm['filter_button'].addEventListener('click', ()=>{
-    for(inputName of inputs){
-        localStorage.setItem(inputName, filterForm[inputName].value)
-    }
-    filterFunction();
-})
-
-filterForm['sortOrder'].addEventListener('click', ()=>{
-    if(filterForm['sortOrder'].value === 'asc'){
-        filterForm['sortOrder'].innerHTML = "&#8595;";
-        filterForm['sortOrder'].value = 'desc';
-    }else{
-        filterForm['sortOrder'].value = 'asc';
-        filterForm['sortOrder'].innerHTML = '&#8593;'
-    };
-    localStorage.setItem('sortOrder', filterForm['sortOrder'].value);
-    filterFunction();
-})
-
-function checkStorage(){
-    for(inputName of inputs) {
-        let value = localStorage.getItem(inputName);
-        if(value !== null){
-            console.log(`${inputName}: ${value}`)
-            filterForm[inputName].value=value
-        }   
-    }
-    filterForm['sortOrder'].value === 'asc' ? filterForm['sortOrder'].innerHTML = "&#8593;" : filterForm['sortOrder'].innerHTML = "&#8595;"
-    filterFunction();
-}
-
-filterForm['reset_filter_button'].addEventListener('click', ()=>{
-    for(inputName of inputs){
-        localStorage.setItem(inputName, '')
-    }
-    localStorage.setItem('sort', 'title');
-    localStorage.setItem('sortOrder', 'asc');
-    checkStorage();
-})
-
-getPosts(posts);
+}, false)
