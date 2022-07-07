@@ -74,12 +74,12 @@ async function getComments(id){
         }else{
             postsCard.appendChild(commentsEl)
         }
-        commentBtn.innerHTML = "Komentarze &#8595;"
+        commentBtn.innerHTML = "Komentarze <i class='fa-solid fa-arrow-down-long'></i>"
         commentBtn.value = 'opened'
     }else{
         const commentsEl = document.getElementById(`comments${id}`)
         commentsEl.remove()
-        commentBtn.innerHTML = "Komentarze &#8593;"
+        commentBtn.innerHTML = "Komentarze <i class='fa-solid fa-arrow-up-long'></i>"
         commentBtn.value = 'closed'
     }
 }
@@ -104,7 +104,7 @@ function showPosts(postsToShow){
         const commentBtn = document.createElement('button');
         commentBtn.setAttribute('id', `comment${postsToShow[key].id}`);
         commentBtn.setAttribute('value', 'closed');
-        commentBtn.innerHTML = "Komentarze &#8593;"
+        commentBtn.innerHTML = "Komentarze <i class='fa-solid fa-arrow-up-long'></i>"
         postCard.appendChild(commentBtn);
         postsEl.appendChild(postCard);
 
