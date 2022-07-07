@@ -12,7 +12,6 @@ export function validateInputs(toValid){
 export function validatePesel(pesel){
     if(pesel.length !== 11){
         errorDialog(`Podano niepoprawny pesel!`);
-        console.log('s')
         return false
     }
     let sum = 0;
@@ -29,8 +28,7 @@ export function validatePesel(pesel){
     }
     sum %= 10;
     checkNumber = 10 - sum;
-    console.log(checkNumber);
-    if(+pesel[10] !== checkNumber){
+    if(+pesel[10] !== checkNumber || +pesel.slice(4,6) > 31 || +pesel.slice(2,4) % 20 > 12){
         errorDialog(`Podano niepoprawny pesel!`);
         return false
     }
