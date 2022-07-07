@@ -1,12 +1,10 @@
 import axios from "axios";
 import { show as showLoading, destroy as destroyLoading } from "../../loading";
 const postsMain = document.getElementById('template');
-const filterBtn = document.getElementById('filter_button');
-const title = document.getElementById('title');
-const userId = document.getElementById('user_id');
-const content = document.getElementById('content');
-const sort = document.getElementById('sort');
-const sortOrder = document.getElementById('sort_order')
+
+const filterForm = document.forms[0]
+let inputs = ['title', 'userId', 'content', 'sort', 'sortOrder']
+
 let posts = []
 let postsShow = []
 const loadingEl = showLoading(document.getElementById('template'));
@@ -39,56 +37,60 @@ function showPosts(postsToShow){
 }
 
 function filterFunction(){
-    postsShow = posts.filter((post) => post.title.toLowerCase().search(title.value.toLowerCase()) >= 0);
-    postsShow = postsShow.filter((post) => post.body.toLowerCase().search(content.value.toLowerCase()) >= 0);
-    if(+userId.value){
-        postsShow = postsShow.filter((post) => +post.userId === +userId.value);
+    postsShow = posts.filter((post) => post.title.toLowerCase().search(filterForm['title'].value.toLowerCase()) >= 0);
+    postsShow = postsShow.filter((post) => post.body.toLowerCase().search(filterForm['content'].value.toLowerCase()) >= 0);
+    if(+filterForm['userId'].value){
+        postsShow = postsShow.filter((post) => +post.userId === +filterForm['userId'].value);
     }
     
     postsShow = postsShow.sort((a, b) => {
-        if(sortOrder.value === 'desc'){
-            return a[sort.value] >= b[sort.value] ? 1 : -1;
+        if(filterForm['sortOrder'].value === 'desc'){
+            return a[filterForm['sort'].value] >= b[filterForm['sort'].value] ? 1 : -1;
         }else{
-            return a[sort.value] <= b[sort.value] ? 1 : -1;
+            return a[filterForm['sort'].value] <= b[filterForm['sort'].value] ? 1 : -1;
         }
     })
     showPosts(postsShow);
 }
 
-filterBtn.addEventListener('click', ()=>{
-    localStorage.setItem('title', title.value);
-    localStorage.setItem('content', content.value);
-    localStorage.setItem('userId', userId.value);
-    localStorage.setItem('sort', sort.value);
-    localStorage.setItem('sortOrder', sortOrder.value);
-    filterFunction();
-})
-
-sortOrder.addEventListener('click', ()=>{
-    if(sortOrder.value === 'asc'){
-        sortOrder.innerHTML = "&#8595;";
-        sortOrder.value = 'desc';
-    }else{
-        sortOrder.value = 'asc';
-        sortOrder.innerHTML = '&#8593;'
-    };
-    localStorage.setItem('sortOrder', sortOrder.value);
-    filterFunction();
-})
-
-
-function checkStorage(){
-    title.value = localStorage.getItem('title');
-    content.value = localStorage.getItem('content');
-    userId.value = localStorage.getItem('userId');
-    sort.value = localStorage.getItem('sort');
-    sortOrder.value = localStorage.getItem('sortOrder');
-    if(sortOrder.value === 'asc'){
-        sortOrder.innerHTML = "&#8593;";
-    }else{
-        sortOrder.innerHTML = "&#8595;";
+filterForm['filter_button'].addEventListener('click', ()=>{
+    for(inputName of inputs){
+        localStorage.setItem(inputName, filterForm[inputName].value)
     }
     filterFunction();
+})
+
+filterForm['sortOrder'].addEventListener('click', ()=>{
+    if(filterForm['sortOrder'].value === 'asc'){
+        filterForm['sortOrder'].innerHTML = "&#8595;";
+        filterForm['sortOrder'].value = 'desc';
+    }else{
+        filterForm['sortOrder'].value = 'asc';
+        filterForm['sortOrder'].innerHTML = '&#8593;'
+    };
+    localStorage.setItem('sortOrder', filterForm['sortOrder'].value);
+    filterFunction();
+})
+
+function checkStorage(){
+    for(inputName of inputs) {
+        let value = localStorage.getItem(inputName);
+        if(value !== null){
+            console.log(`${inputName}: ${value}`)
+            filterForm[inputName].value=value
+        }   
+    }
+    filterForm['sortOrder'].value === 'asc' ? filterForm['sortOrder'].innerHTML = "&#8593;" : filterForm['sortOrder'].innerHTML = "&#8595;"
+    filterFunction();
 }
+
+filterForm['reset_filter_button'].addEventListener('click', ()=>{
+    for(inputName of inputs){
+        localStorage.setItem(inputName, '')
+    }
+    localStorage.setItem('sort', 'title');
+    localStorage.setItem('sortOrder', 'asc');
+    checkStorage();
+})
 
 getPosts(posts);

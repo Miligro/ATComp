@@ -28,7 +28,7 @@ async function loadPage(pageName){
             });
         })
     } else {
-        page = await import('../notFound.html')
+        page = await import('../pages/notFound/notFound.html')
         document.getElementById('template').innerHTML=page[1]
         loadingEl.remove(loadingEl);
     }

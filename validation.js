@@ -86,7 +86,7 @@ function errorDialog(msg){
     messagePara.innerText = msg;
 
     const closeBtn = document.createElement("button");
-    closeBtn.setAttribute('id', 'close-dialog-btn');
+    closeBtn.setAttribute('id', 'close-btn');
     closeBtn.innerText = "Zamknij";
 
     closeBtn.addEventListener('click', ()=>{
