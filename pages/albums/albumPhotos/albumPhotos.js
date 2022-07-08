@@ -1,30 +1,32 @@
 import {get} from '../../../api.js'
 
-const photosMain = document.getElementById('template');
 const slideLeftBtn = document.getElementById('slide-left-btn');
 const slideRightBtn = document.getElementById('slide-right-btn');
-const imgEl = document.getElementById('img');
 
 let photos = [];
 let photosEl = [];
 let length = 0;
 let path = window.location.pathname.split('/')
 let photoIndex = 0;
-
+let sliderWidth = 0;
 async function getPhotos(id){
     photos = await get(`https://jsonplaceholder.typicode.com/albums/${id}/photos`);
-    photos = photos.slice(48);
     showPhotos();
 }
 
 function showPhotos(){
     const slideGroup = document.getElementById('slider');
+    sliderWidth = slideGroup.offsetWidth;
+    sliderHeight = slideGroup.offsetWidth;
     for(let photo of photos){
         const slideEl = document.createElement('div');
         slideEl.setAttribute('class', 'slide');
+
         const imgEl = document.createElement('img')
         imgEl.setAttribute('src', photo.url);
         imgEl.setAttribute('title',photo.title);
+        imgEl.style.width = sliderWidth + 'px';
+        imgEl.style.height = sliderHeight + 'px';
         slideEl.appendChild(imgEl)
         photosEl.push(slideEl);
         slideGroup.appendChild(slideEl);
@@ -33,13 +35,10 @@ function showPhotos(){
 }
 
 function slide(index){
-    // const pixels = (length/2*600 - 300 - index*600);
-    const pixels = index*600;
     photosEl.forEach((el)=>{
-        el.style.transform = `translateX(-${index*600}px)`
+        el.style.transform = `translateX(-${index*sliderWidth}px)`
     })
 }
-
 
 slideLeftBtn.addEventListener('click', ()=>{
     const index = photoIndex - 1
@@ -47,6 +46,7 @@ slideLeftBtn.addEventListener('click', ()=>{
         photoIndex = index;
         slide(photoIndex);
     }
+    
 })
 
 slideRightBtn.addEventListener('click', ()=>{
