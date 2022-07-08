@@ -13,7 +13,7 @@ let photoIndex = 0;
 
 async function getPhotos(id){
     photos = await get(`https://jsonplaceholder.typicode.com/albums/${id}/photos`);
-    photos = photos.slice(40);
+    photos = photos.slice(48);
     showPhotos();
 }
 
@@ -30,16 +30,13 @@ function showPhotos(){
         slideGroup.appendChild(slideEl);
     }
     length = photosEl.length
-    // const pixels = (length/2*600 - 300)
-    // photosEl.forEach((el)=>{
-    //     el.style.transform = `translateX(${pixels}px)`
-    // })
 }
 
 function slide(index){
-    const pixels = (length/2*600 - 300 - index*600);
+    // const pixels = (length/2*600 - 300 - index*600);
+    const pixels = index*600;
     photosEl.forEach((el)=>{
-        el.style.transform = `translateX(${pixels}px)`
+        el.style.transform = `translateX(-${index*600}px)`
     })
 }
 
