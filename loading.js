@@ -14,13 +14,14 @@ const loadingHTML =  `
 
 var currentEl = null
 
-export function show(el) {
+export function show(el, type) {
     currentEl = document.createElement('div')
-    currentEl.setAttribute('class', 'loading')
+    currentEl.setAttribute('class', `loading${type}`)
     currentEl.innerHTML = loadingHTML
     el.appendChild(currentEl)
     return currentEl;
 }
+
 export function destroy(loadingEl) {
-    loadingEl?.remove()
+    loadingEl.remove()
 }

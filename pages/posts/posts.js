@@ -41,7 +41,7 @@ const filters = [
         id: 'sort',
     },
 ]
-const loadingEl = showLoading(document.getElementById('template'));
+const loadingEl = showLoading(document.getElementById('template'), '');
 
 async function getPosts(){
     posts = await get('https://jsonplaceholder.typicode.com/posts')
@@ -51,13 +51,25 @@ async function getPosts(){
 
 async function getComments(id){
     const commentBtn = document.getElementById(`comment${id}`);
+    
     if(commentBtn.value === 'closed'){
-        const comments = await get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
-
         const postEl = document.getElementById(`post${id}`).nextSibling;
         const commentsEl = document.createElement('div')
         commentsEl.setAttribute('id', `comments${id}`)
         commentsEl.setAttribute('class', 'comments-card');
+        const loadingCommentsEl = showLoading(document.getElementById('template'), '-small');
+        commentsEl.appendChild(loadingCommentsEl);
+        postsCard = document.getElementById('posts_card');
+        if(postEl){
+            postsCard.insertBefore(commentsEl, postEl);
+        }else{
+            postsCard.appendChild(commentsEl)
+        }
+
+        const comments = await get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+
+        destroyLoading(loadingCommentsEl);
+
         for(let comment of comments){
             commentsEl.innerHTML += `
             <div class="comment-card">
@@ -68,12 +80,7 @@ async function getComments(id){
             </div>
             `
         }
-        postsCard = document.getElementById('posts_card');
-        if(postEl){
-            postsCard.insertBefore(commentsEl, postEl);
-        }else{
-            postsCard.appendChild(commentsEl)
-        }
+        
         commentBtn.innerHTML = "Komentarze <i class='fa-solid fa-arrow-down-long'></i>"
         commentBtn.value = 'opened'
     }else{

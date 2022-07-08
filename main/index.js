@@ -1,5 +1,5 @@
 import {show as showLoading, destroy as destroyLoading} from "../loading.js"
-const loadingEl = showLoading(document.body)
+const loadingEl = showLoading(document.body, '')
 const pages = {
     posts: {
         html: import('../pages/posts/posts.html'),
