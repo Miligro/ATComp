@@ -9,6 +9,23 @@ body{
     font-family: Arial, sans-serif;
 }
 
+.large-icon{
+    font-size: 50px;
+    position: relative;
+    height: 100%;
+    text-align: center;
+}
+
+.large-icon:hover{
+    scale: 1.1;
+}
+
+a{
+    text-decoration: none;
+    /* color: white; */
+    color:black
+}
+
 .small{
     font-size: small;
     font-weight: bold;
@@ -185,6 +202,12 @@ label{
     width: 30%;
 }
 
+/* .photos-slider{
+    width: 40%;
+    height: 40%;
+    flex-direction: ;
+} */
+
 .head_nav{
     background-color: black;
     height: 60px;
@@ -194,17 +217,14 @@ label{
     top: 0;
     width: 100%;
     position: fixed;
-}
-
-.head_nav h2{
-    margin-left: 20px;
+    justify-content: space-between;
+    padding: 20px;
     color: white;
 }
 
 .head_nav a{
-    margin-left: 20px;
-    text-decoration: none;
     color: white;
+
 }
 
 .error{
@@ -274,7 +294,8 @@ h1{
     margin: 0.8rem 0;
 }
 
-.post_card{
+.card,
+.card-as-btn{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -285,18 +306,17 @@ h1{
     border-radius: 10px;
     width: 100%;
     box-shadow: 0 0 8px black;
+    text-align: center;
 }
 
-.post_card h2{
+.card h2,
+.card-as-btn h2{
     margin-top: 5px;
     margin-bottom: 0;
 }
 
-#posts_card{
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.card-as-btn{
+    cursor: pointer;
 }
 
 .user_id{
@@ -317,11 +337,19 @@ h1{
     align-items: center;
 }
 
+
 .row p{
     font-weight: bold;
 }
 
-.filter_con{
+.cards_container{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.filter_container{
     display: flex; 
     flex-direction: column;
     width: 40%;
@@ -343,6 +371,22 @@ h1{
     width: 90%;
     padding: 10px;
     animation: comments-card-animation 0.6s;
+}
+
+.icon-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#slide-left-btn:hover{
+    right: 6px;
+}
+
+#slide-right-btn:hover{
+    left: 6px;
 }
 
 .loading-items{
@@ -375,7 +419,6 @@ h1{
 .loading{
     width: 100%;
     height: 100%;
-    /* margin: 20px 0; */
     top: 0;
     display: flex;
     background-color: white;
@@ -453,3 +496,31 @@ h1{
     0% {opacity: 0;}
     100% {opacity: 1;}
 }
+
+#slider {
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+    align-self: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 600px;
+    width: 600px;
+}
+  
+.slide {
+    position: relative;
+    padding: 0;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1s;
+}
+
+/* .slide img{
+    max-width: 100%;
+    max-height: 100%;
+} */

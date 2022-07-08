@@ -2,34 +2,78 @@ import {show as showLoading, destroy as destroyLoading} from "../loading.js"
 const loadingEl = showLoading(document.body, '')
 const pages = {
     posts: {
-        html: import('../pages/posts/posts.html'),
-        scripts(){
-            return import('../pages/posts/posts.js')
-        }
+        main: {
+            html: import('../pages/posts/posts.html'),
+            scripts(){
+                return import('../pages/posts/posts.js')
+            }
+        },
     },
     form: {
-        html: import('../pages/form/form.html'),
-        scripts(){
-            return import('../pages/form/form.js')
+        main:{
+            html: import('../pages/form/form.html'),
+            scripts(){
+                return import('../pages/form/form.js')
+            }
+        },
+    },
+    albums: {
+        main: {
+            html: import('../pages/albums/albums.html'),
+            scripts(){
+                return import('../pages/albums/albums.js')
+            }
+        },
+        id:{
+            main:{
+                html: import('../pages/albums/albumPhotos/albumPhotos.html'),
+                scripts(){
+                    return import('../pages/albums/albumPhotos/albumPhotos.js')
+                }
+            },
         }
     }
 }
-const path = window.location.pathname.substring(1);
+
+const path = window.location.pathname.substring(1).split('/');
 loadPage(path);
 
-async function loadPage(pageName){
+async function loadPage(pagesNames){
     let page = null
-    if(pages[pageName]) {
-        let toLoad = pages[pageName]
-        toLoad.html.then(async (page) => {
-            document.getElementById('template').innerHTML=page[1]
-            toLoad.scripts().then(()=>{
-                destroyLoading(loadingEl)
-            });
-        })
-    } else {
-        page = await import('../pages/notFound/notFound.html')
-        document.getElementById('template').innerHTML=page[1]
-        loadingEl.remove(loadingEl);
+    if(pages[pagesNames[0]]){
+        page = pages[pagesNames[0]]
+    }else{
+        notFound();
+        return;
     }
+    for(let i=1; i < pagesNames.length; i++){
+        if(!isNaN(+pagesNames[i])){
+            if(page['id']){
+                page = page['id'];
+            }else{
+                notFound();
+                return;
+            }
+        }else{
+            if(page[pagesNames[i]]){
+                page = page[pagesNames[i]];
+            }else{
+                notFound();
+                return;
+            }
+        }
+    }
+    let toLoad = page['main']
+    toLoad.html.then(async (page) => {
+        document.getElementById('template').innerHTML=page[1]
+        toLoad.scripts().then(()=>{
+            destroyLoading(loadingEl)
+        });
+    })
 };
+
+async function notFound(){
+    let page = await import('../pages/notFound/notFound.html')
+    document.getElementById('template').innerHTML=page[1]
+    loadingEl.remove(loadingEl);
+}

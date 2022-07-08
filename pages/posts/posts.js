@@ -98,10 +98,11 @@ function showPosts(postsToShow){
     }
     const postsEl = document.createElement('div');
     postsEl.setAttribute('id', 'posts_card');
+    postsEl.setAttribute('class', 'cards_container');
 
     for(key in postsToShow){
         const postCard = document.createElement('div');
-        postCard.setAttribute('class', 'post_card');
+        postCard.setAttribute('class', 'card');
         postCard.setAttribute('id', `post${postsToShow[key].id}`)
         postCard.innerHTML = `
             <h2>${postsToShow[key].title}</h2>
