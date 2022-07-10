@@ -1,4 +1,8 @@
 import { get } from "../../../api.js";
+import {
+  show as showLoading,
+  destroy as destroyLoading,
+} from "../../../loading";
 
 const slideLeftBtn = document.getElementById("slide-left-btn");
 const slideRightBtn = document.getElementById("slide-right-btn");
@@ -8,6 +12,7 @@ let length = 0;
 let path = window.location.pathname.split("/");
 const sliderWidth = 500;
 const sliderHeight = 500;
+const loadingEl = showLoading(document.getElementById("template"), "");
 
 async function getPhotos(id) {
   photos = await get(
@@ -40,6 +45,7 @@ function showPhotos() {
     slides.style.marginLeft = `-${sliderWidth}px`;
   }
   slides.insertBefore(slides.lastElementChild, slides.firstElementChild);
+  destroyLoading(loadingEl);
 }
 
 function slideLeft() {
