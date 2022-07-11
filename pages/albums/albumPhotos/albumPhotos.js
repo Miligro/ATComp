@@ -31,20 +31,8 @@ function showPhotos() {
   }
   slides.insertBefore(slides.lastElementChild, slides.firstElementChild);
   length = photos.length;
-  if(length === 2){
-    length += 1;
-    slides.style.marginLeft = `-${sliderWidth}px`;
-    appendSlide(slides.firstElementChild.firstElementChild.src, "")
 
-    slideLeftBtn.addEventListener("click", () => {
-      slideLeftSrc();
-    });
-    
-    slideRightBtn.addEventListener("click", () => {
-      slideRightSrc();
-    });
-  }
-  else if (length > 1) {
+  if (length > 1) {
     slides.style.marginLeft = `-${sliderWidth}px`;
     slideLeftBtn.addEventListener("click", () => {
       slideLeft();
@@ -53,6 +41,16 @@ function showPhotos() {
     slideRightBtn.addEventListener("click", () => {
       slideRight();
     });
+  }
+
+  if(length === 2){
+    length += 2;
+    const srcFirst = slides.firstElementChild.firstElementChild.src;
+    const titleFirst = slides.firstElementChild.firstElementChild.title;
+    const srcLast = slides.lastElementChild.firstElementChild.src;
+    const titleLast = slides.lastElementChild.firstElementChild.title;
+    appendSlide(srcFirst, titleFirst);
+    appendSlide(srcLast, titleLast);
   }
 
   slides.style.width = `${length * sliderWidth}px`;
@@ -93,31 +91,6 @@ function slideRight() {
     slides.style.transition = ``;
     slides.style.left = ``;
   }, 200);
-}
-
-function slideLeftSrc() {
-  const slides = document.getElementById("slides");
-  slides.style.transition = `left 0.2s`;
-  slides.style.left = `${sliderWidth}px`;
-
-  setTimeout(() => {
-    slides.insertBefore(slides.lastElementChild, slides.firstElementChild);
-    slides.style.transition = ``;
-    slides.style.left = `0px`;
-  }, 200);
-  slides.lastElementChild.firstElementChild.src = slides.firstElementChild.firstElementChild.src;
-}
-
-function slideRightSrc() {
-  const slides = document.getElementById("slides");
-  slides.style.transition = `left 0.2s`;
-  slides.style.left = `${-sliderWidth}px`;
-  setTimeout(() => {
-    slides.appendChild(slides.firstElementChild);
-    slides.style.transition = ``;
-    slides.style.left = ``;
-  }, 200);
-  slides.lastElementChild.firstElementChild.src = slides.firstElementChild.firstElementChild.src;
 }
 
 getPhotos(+path[path.length - 1]);

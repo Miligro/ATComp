@@ -68,7 +68,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: alert-animation 0.5s;
+  animation: alert-animation ease-in 0.3s;
 }
 
 #close-btn {
@@ -204,7 +204,7 @@ label {
 }
 
 .head_nav {
-  background-color: black;
+  background-color: rgb(132, 149, 157);
   height: 60px;
   display: flex;
   flex-direction: row;
@@ -214,11 +214,17 @@ label {
   position: fixed;
   justify-content: space-between;
   padding: 20px;
-  color: white;
 }
 
 .head_nav a {
-  color: white;
+  width: 160px;
+  text-align: center;  
+  justify-content: center;
+  /* color: white; */
+}
+
+.head_nav a h2 {
+  margin: 0;
 }
 
 .error {
@@ -226,8 +232,8 @@ label {
 }
 
 .side_nav {
-  background-color: rgb(0, 0, 0);
-  width: 140px;
+  background-color: rgba(132, 149, 157, 0.63);
+  width: 200px;
   height: 100%;
   top: 60px;
   position: fixed;
@@ -360,8 +366,9 @@ h1 {
   border-top-right-radius: 0;
   box-shadow: 3px 3px 3px rgb(83, 77, 77), -3px 3px 3px rgb(83, 77, 77);
   width: 90%;
-  padding: 10px;
-  animation: comments-card-animation 2s;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height ease 2s;
 }
 
 .icon-button {

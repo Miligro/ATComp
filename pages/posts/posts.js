@@ -51,13 +51,18 @@ async function getPosts(){
 
 async function getComments(id){
     const commentBtn = document.getElementById(`comment${id}`);
-    
     if(commentBtn.value === 'closed'){
+        const el = document.getElementById(`comments${id}`);
+        if(el){
+            el.remove();
+        }
+        
         const postEl = document.getElementById(`post${id}`).nextSibling;
+
         const commentsEl = document.createElement('div')
         commentsEl.setAttribute('id', `comments${id}`)
         commentsEl.setAttribute('class', 'comments-card');
-        const loadingCommentsEl = showLoading(document.getElementById('template'), '-small');
+        const loadingCommentsEl = showLoading(commentsEl, '-small');
         commentsEl.appendChild(loadingCommentsEl);
         postsCard = document.getElementById('posts_card');
         if(postEl){
@@ -65,11 +70,11 @@ async function getComments(id){
         }else{
             postsCard.appendChild(commentsEl)
         }
+        commentsEl.style.maxHeight = `${commentsEl.scrollHeight}px`
 
         const comments = await get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
-
+        
         destroyLoading(loadingCommentsEl);
-
         for(let comment of comments){
             commentsEl.innerHTML += `
             <div class="comment-card">
@@ -77,15 +82,15 @@ async function getComments(id){
                 <p>${comment.body}</p>
                 <p class='small'>email: ${comment.email}</p>
                 <hr>
-            </div>
-            `
+                </div>
+                `
         }
-        
+        commentsEl.style.maxHeight = `${commentsEl.scrollHeight}px`
         commentBtn.innerHTML = "Komentarze <i class='fa-solid fa-arrow-down-long'></i>"
         commentBtn.value = 'opened'
     }else{
         const commentsEl = document.getElementById(`comments${id}`)
-        commentsEl.remove()
+        commentsEl.style.maxHeight = '0px'
         commentBtn.innerHTML = "Komentarze <i class='fa-solid fa-arrow-up-long'></i>"
         commentBtn.value = 'closed'
     }
