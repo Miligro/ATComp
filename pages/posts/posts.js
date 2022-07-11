@@ -238,7 +238,7 @@ function confirmDialog(id){
 }
 
 function editDialog(id){
-    const post = postsShow.find((post) => post.userId === id);
+    const post = posts.find((post) => post.id === id);
     if(!post){
         return;
     }
@@ -316,7 +316,6 @@ function editDialog(id){
             alertContent.appendChild(messagePara);
             alertContent.appendChild(closeBtn);
         })
-        console.log(post);
     })
 
     rowEndEl.appendChild(closeBtn);

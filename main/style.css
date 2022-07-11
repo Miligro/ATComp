@@ -74,24 +74,6 @@ button {
   margin: 10px 0;
 }
 
-#close-btn {
-  padding: 5px;
-  background-color: rgb(65, 65, 65);
-  border: 1px solid rgb(65, 65, 65);
-  border-radius: 5px;
-  color: white;
-  width: 20%;
-  /* margin: 20px 0; */
-  font-size: large;
-  align-self: center;
-}
-
-#close-btn:hover,
-#close-btn:focus {
-  cursor: pointer;
-  background-color: black;
-}
-
 .alert-content p {
   font-size: 25px;
 }
@@ -167,17 +149,31 @@ select {
   border-radius: 3px;
 }
 
+.save_button,
 .filter_button,
 .reset_filter_button,
-.delete_button {
-  padding: 8px;
-  /* margin: auto 0; */
-  background-color: #0275d8;
-  border: none;
-  border-radius: 4px;
-  font-size: 15px;
+.delete_button,
+#close-btn {
+  padding: 10px;
+  background-color: #5cb85c;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
   font-weight: bold;
-  color: white;
+}
+
+.save_button button:hover,
+.save_button button:focus {
+  border: 1px solid black;
+}
+
+#close-btn {
+  background-color: rgb(65, 65, 65);
+  border: 1px solid rgb(65, 65, 65);
+}
+
+#close-btn:hover,
+#close-btn:focus {
+  background-color: black;
 }
 
 .filter_button,
@@ -185,7 +181,10 @@ select {
   width: 100%;
 }
 
-
+.filter_button{
+  border: 1px solid #198bee;
+  background-color: #198bee
+}
 
 .filter_button:hover {
   background-color: #0280ee;
@@ -193,6 +192,7 @@ select {
 
 .reset_filter_button,
 .delete_button {
+  border: 1px solid #da1717;
   background-color: #da1717;
 }
 
@@ -201,20 +201,7 @@ select {
   background-color: #d43636;
 }
 
-.save_button {
-  margin-top: 10px;
-  padding: 10px;
-  width: 70px;
-  background-color: #5cb85c;
-  border: 1px solid #5cb85c;
-  border-radius: 5px;
-  color: black;
-}
 
-.save_button button:hover,
-.save_button button:focus {
-  border: 1px solid black;
-}
 
 label {
   margin-top: 10px;
