@@ -26,8 +26,7 @@ h2{
 
 a {
   text-decoration: none;
-  /* color: white; */
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 .small {
@@ -43,7 +42,6 @@ button {
   font-size: 15px;
   border-radius: 5px;
   padding: 5px;
-  margin-top: 10px;
 }
 
 .alert-dialog {
@@ -68,7 +66,12 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: alert-animation ease-in 0.3s;
+  animation: alert-animation ease-in 0.2s;
+  padding: 20px;
+}
+
+.alert-content p {
+  margin: 10px 0;
 }
 
 #close-btn {
@@ -78,7 +81,7 @@ button {
   border-radius: 5px;
   color: white;
   width: 20%;
-  margin: 20px 0;
+  /* margin: 20px 0; */
   font-size: large;
   align-self: center;
 }
@@ -93,8 +96,9 @@ button {
   font-size: 25px;
 }
 
-.error-icon {
-  margin: 20px;
+.error-icon,
+.ask-icon,
+.success-icon {
   border: 3px solid red;
   border-radius: 50px;
   width: 100px;
@@ -104,6 +108,17 @@ button {
   display: inline-flex;
   color: red;
   font-size: 60px;
+}
+
+.ask-icon {
+  border: 3px solid gray;
+  color: gray;
+
+}
+
+.success-icon {
+  border: 3px solid green;
+  color: green;
 }
 
 main {
@@ -125,7 +140,10 @@ input {
   width: 100%;
 }
 
-.row input {
+.row-space input,
+.row-start input,
+.row-end input 
+{
   margin-top: 0;
 }
 
@@ -150,33 +168,41 @@ select {
 }
 
 .filter_button,
-.reset_filter_button {
+.reset_filter_button,
+.delete_button {
   padding: 8px;
-  margin: auto 0;
+  /* margin: auto 0; */
   background-color: #0275d8;
   border: none;
   border-radius: 4px;
-  width: 100%;
   font-size: 15px;
   font-weight: bold;
   color: white;
 }
 
+.filter_button,
+.reset_filter_button{
+  width: 100%;
+}
+
+
+
 .filter_button:hover {
   background-color: #0280ee;
 }
 
-.reset_filter_button {
+.reset_filter_button,
+.delete_button {
   background-color: #da1717;
 }
 
-.reset_filter_button:hover {
+.reset_filter_button:hover,
+.delete_button:hover {
   background-color: #d43636;
 }
 
 .save_button {
   margin-top: 10px;
-
   padding: 10px;
   width: 70px;
   background-color: #5cb85c;
@@ -204,7 +230,7 @@ label {
 }
 
 .head_nav {
-  background-color: rgb(132, 149, 157);
+  background-color: #4c3c3c;
   height: 60px;
   display: flex;
   flex-direction: row;
@@ -214,6 +240,7 @@ label {
   position: fixed;
   justify-content: space-between;
   padding: 20px;
+  /* border-bottom: 1px solid black; */
 }
 
 .head_nav a {
@@ -232,7 +259,7 @@ label {
 }
 
 .side_nav {
-  background-color: rgba(132, 149, 157, 0.63);
+  background-color: #5f4c4c;
   width: 200px;
   height: 100%;
   top: 60px;
@@ -245,6 +272,7 @@ label {
 .side_nav a {
   width: 80%;
   text-decoration: none;
+  color: white;
 }
 
 .navigation_con,
@@ -255,10 +283,11 @@ label {
   align-items: center;
   flex-direction: column;
   padding: 1rem;
-  border: 2px solid rgb(255, 255, 255);
   border-radius: 6px;
-  color: white;
+  color: black;
 }
+
+
 
 .comment-card {
   text-align: center;
@@ -278,9 +307,9 @@ label {
 }
 
 .navigation_con:hover {
-  border: 2px solid rgb(61, 53, 170);
+  border: 2px solid rgb(0, 0, 0);
   cursor: pointer;
-  color: rgb(61, 53, 170);
+  color: rgb(0, 0, 0);
 }
 
 hr {
@@ -306,6 +335,7 @@ h1 {
   width: 100%;
   box-shadow: 0 0 8px black;
   text-align: center;
+  color: black;
 }
 
 .card h2,
@@ -327,16 +357,41 @@ h1 {
   margin-top: 10px;
 }
 
-.row {
+.row-space,
+.row-start,
+.row-end,
+.row-space-slider {
   display: flex;
   flex: 1 1;
-  justify-content: space-between;
-  gap: 10px;
   align-items: center;
+  margin-top: 10px;
+  gap:10px;
+  width: 100%;
 }
 
-.row p {
+.row-space p,
+.row-start p,
+.row-end p{
   font-weight: bold;
+}
+
+.row-space{
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.row-space-slider{
+  gap: 10px;
+  justify-content: space-between;
+  width: 55%;
+}
+
+.row-start{
+  justify-content: flex-start;
+}
+
+.row-end{
+  justify-content: flex-end;
 }
 
 .cards_container {
@@ -368,7 +423,7 @@ h1 {
   width: 90%;
   max-height: 0px;
   overflow: hidden;
-  transition: max-height ease 2s;
+  transition: max-height ease 0.8s;
 }
 
 .icon-button {
@@ -493,21 +548,12 @@ h1 {
 
 @keyframes alert-animation {
   0% {
-    scale: 0.5;
-    -webkit-transform: scale(0.5);
+    scale: 0.8;
+    -webkit-transform: scale(0.8);
   }
   100% {
     scale: 1;
     -webkit-transform: scale(1);
-  }
-}
-
-@keyframes comments-card-animation {
-  0% {
-    height: 0%;
-  }
-  100% {
-    height: fit-content;
   }
 }
 
@@ -551,4 +597,21 @@ h1 {
     align-items: center;
     justify-content: space-between;
     font-size: 20px;
+}
+
+.side_nav .main-page-nav{
+  border: 1px solid rgb(255, 255, 255);
+}
+
+.side_nav .main-page-nav:hover{
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.side_nav p,
+.side_nav i {
+  color: white;
+}
+
+i:hover {
+  scale: 1.1;
 }

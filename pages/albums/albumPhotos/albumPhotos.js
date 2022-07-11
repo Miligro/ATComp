@@ -18,7 +18,6 @@ async function getPhotos(id) {
   photos = await get(
     `https://jsonplaceholder.typicode.com/albums/${id}/photos`
   );
-  photos = photos.slice(1,3);
   showPhotos();
 }
 

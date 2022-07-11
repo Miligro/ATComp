@@ -40,6 +40,7 @@ loadPage(path);
 
 async function loadPage(pagesNames){
     if(path[0] === ""){
+        document.getElementById('side_nav').style.display = 'none';
         mainPage();
         return;
     }

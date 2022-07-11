@@ -9,3 +9,23 @@ export async function get(url){
         return null;
     }   
 }
+
+export async function deleteAxios(url){
+    try{
+        res = await axios.delete(url);
+        return 'success';
+    }catch(err){
+        console.log(err);
+        return 'error';
+    }
+}
+
+export async function updateAxios(url, item){
+    try{
+        res = await axios.put(url, item);
+        return 'success';
+    }catch(err){
+        console.log(err);
+        return 'error';
+    }
+}

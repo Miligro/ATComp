@@ -88,7 +88,7 @@ export function onFilter(toFilter){
 export function createFilters(filters, storageName){
     storage = storageName;
     let rowEl = document.createElement('div');
-    rowEl.setAttribute('class', 'row');
+    rowEl.setAttribute('class', 'row-space');
 
     for(let filter of filters){
         if(['number','text'].includes(filter.type)){
@@ -104,8 +104,8 @@ export function createFilters(filters, storageName){
 
                 if(rowEl.childElementCount === 3){
                     formEl.appendChild(rowEl);
-                    rowEl = document.createElement('row')
-                    rowEl.setAttribute('class', 'row');
+                    rowEl = document.createElement('div')
+                    rowEl.setAttribute('class', 'row-space');
                 }
             }
 
@@ -125,8 +125,8 @@ export function createFilters(filters, storageName){
                 rowEl.appendChild(el);
                 if(rowEl.childElementCount === 3){
                     formEl.appendChild(rowEl);
-                    rowEl = document.createElement('row')
-                    rowEl.setAttribute('class', 'row');
+                    rowEl = document.createElement('div')
+                    rowEl.setAttribute('class', 'row-space');
                 }   
             }
         }
@@ -136,8 +136,8 @@ export function createFilters(filters, storageName){
         formEl.appendChild(rowEl);
     }
 
-    rowEl = document.createElement('row')
-    rowEl.setAttribute('class', 'row');
+    rowEl = document.createElement('div')
+    rowEl.setAttribute('class', 'row-space');
 
     
     filterBtn.setAttribute('type', 'button');
