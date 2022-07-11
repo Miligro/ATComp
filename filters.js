@@ -5,6 +5,7 @@ let sortEl = null
 const formEl = document.createElement('form');
 
 let inputs = []
+let storage = "";
 
 const changeSort = () => {
     if (formEl['sortOrder'].value === 'asc'){
@@ -20,7 +21,7 @@ let filterReq = new CustomEvent('filter', {})
 
 export function checkStorage(){
     for(let input of inputs) {
-        let value = localStorage.getItem(input.id);
+        let value = localStorage.getItem(`${storage}_${input.id}`);
         if(value !== null){
             formEl[input.id].value=value
         }   
@@ -31,23 +32,23 @@ export function checkStorage(){
 
 filterBtn.addEventListener('click', ()=>{
     for(let input of inputs) {
-        localStorage.setItem(input.id, formEl[input.id].value)
+        localStorage.setItem(`${storage}_${input.id}`, formEl[input.id].value)
     }
     window.parent.document.dispatchEvent(filterReq);
 })
 
 sortOrderBtn.addEventListener('click', ()=>{
     changeSort()
-    localStorage.setItem('sortOrder', formEl['sortOrder'].value);
+    localStorage.setItem(`${storage}_sortOrder`, formEl['sortOrder'].value);
     window.parent.document.dispatchEvent(filterReq);
 })
 
 resetFilterBtn.addEventListener('click', ()=>{
     for(let input of inputs){
-        localStorage.setItem(input.id, '')
+        localStorage.setItem(`${storage}_${input.id}`, '')
     }
-    localStorage.setItem('sort', 'title');
-    localStorage.setItem('sortOrder', 'asc');
+    localStorage.setItem(`${storage}_sort`, 'title');
+    localStorage.setItem(`${storage}_sortOrder`, 'asc');
     checkStorage();
 })
 
@@ -84,7 +85,8 @@ export function onFilter(toFilter){
     return toFilter;
 }
 
-export function createFilters(filters){
+export function createFilters(filters, storageName){
+    storage = storageName;
     let rowEl = document.createElement('div');
     rowEl.setAttribute('class', 'row');
 

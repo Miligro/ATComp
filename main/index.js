@@ -39,6 +39,10 @@ const path = window.location.pathname.substring(1).split('/');
 loadPage(path);
 
 async function loadPage(pagesNames){
+    if(path[0] === ""){
+        mainPage();
+        return;
+    }
     let page = null
     if(pages[pagesNames[0]]){
         page = pages[pagesNames[0]]
@@ -73,7 +77,13 @@ async function loadPage(pagesNames){
 };
 
 async function notFound(){
-    let page = await import('../pages/notFound/notFound.html')
-    document.getElementById('template').innerHTML=page[1]
+    let page = await import('../pages/notFound/notFound.html');
+    document.getElementById('template').innerHTML=page[1];
+    loadingEl.remove(loadingEl);
+}
+
+async function mainPage(){
+    let page = await import('../pages/main/main.html');
+    document.getElementById('template').innerHTML=page[1];
     loadingEl.remove(loadingEl);
 }

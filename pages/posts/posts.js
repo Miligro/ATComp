@@ -124,7 +124,7 @@ function showPosts(postsToShow){
 }
 
 getPosts();
-createFilters(filters);
+createFilters(filters, 'posts');
 
 window.document.addEventListener('filter', ()=>{
     postsShow = filterPosts(posts);
